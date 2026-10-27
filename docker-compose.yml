@@ -1,0 +1,20 @@
+services:
+  goose-analyzer-system:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: goose-analyzer
+    restart: unless-stopped
+    network_mode: host
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    environment:
+      - TCP_ADDR=0.0.0.0:5514
+      - HTTP_ADDR=0.0.0.0:5000
+      - ANALYZER_IFACE=eth0
+      - DEFAULT_DUMP=/root/dumps/nergenA1_A2dump_nodup.pcapng
+    volumes:
+      - ./uploads:/app/uploads
+      - ./configs:/app/configs
+      - ./dumps:/root/dumps
